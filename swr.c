@@ -1,9 +1,14 @@
+/*
+ * See LICENSE file for
+ * more details & copyright.
+ *
+ *
+ * sw - self writer
+ **/
 
 
 
-
-/* sw - self writer */
-
+/* includes */
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -49,7 +54,6 @@ writechanges (void)
 
   if (!file) {
     printf("Can't open the file. (%s).", filename);
-    fclose(file);
     return 1;
   }
 
@@ -106,6 +110,7 @@ readfile (void)
 
   filestr[filesize]=0;
 
+  puts("filestr filling passed.");
   char * tok = strtokn(filestr);
   int col=0;
   for (;tok;) {
@@ -113,7 +118,7 @@ readfile (void)
     tok = strtokn(0);
   }
   strbufflen = col;
-  
+
   fclose(file);
   return 0;
 }
@@ -288,7 +293,7 @@ main (int argc, char ** argv) {
   }
 
   char inputbuff[100];
-  strbuff = malloc(400);
+  strbuff = malloc(sizeof(char *)*400);
 
   for (;;) {
     write(1,"> ",3);

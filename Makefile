@@ -15,7 +15,7 @@ all: swr
 swr.o: swr.c
 ${OBJ}: config.mk
 
-swr: ${OBJ}
+swr: clean ${OBJ}
 	${CC} ${SRC} -o $@ ${CFLAGS}
 
 clean:
