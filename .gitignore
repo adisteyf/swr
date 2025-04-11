@@ -1,0 +1,6 @@
+# .gitignore file for swr redactor
+
+# build files
+*.o
+swr
+
