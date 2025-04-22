@@ -15,6 +15,8 @@
 #include <string.h>
 #include <unistd.h>
 
+#define MAX_STRINGS 400
+
 char ** strbuff;
 int     line=0;
 int     strbufflen=0;
@@ -109,8 +111,10 @@ readfile (void)
   }
 
   filestr[filesize]=0;
+  if (filesize >= MAX_STRINGS) {
+    strbuff = realloc(strbuff, filesize+1);
+  }
 
-  puts("filestr filling passed.");
   char * tok = strtokn(filestr);
   int col=0;
   for (;tok;) {
@@ -161,6 +165,7 @@ checkcmds (char * inputbuff)
         if (strbufflen==0 || line>=strbufflen) {
           puts("(added new string)");
           strbuff[strbufflen++] = strdup("\n");
+          if (strbufflen >= MAX_STRINGS && !(strbufflen % 4)) { strbuff = realloc(strbuff, strbufflen+4); }
         }
 
         if (strbuff[line] && strbuff[line][0]!=0x0A) { free(strbuff[line]); }
@@ -293,7 +298,7 @@ main (int argc, char ** argv) {
   }
 
   char inputbuff[100];
-  strbuff = malloc(sizeof(char *)*400);
+  strbuff = malloc(sizeof(char *)*MAX_STRINGS);
 
   for (;;) {
     write(1,"> ",3);
